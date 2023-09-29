@@ -20,5 +20,10 @@ See below for chosen screenshots from the HappyCoding animation example to repre
 
 ## Part 2: Coding Technique
 
-More text coming..
+The inspiration is to use the p5.sound library to track the amplitudes of a sound file by frequency bands - Low, Mid, and High. 
 
+Using shapes to represent the bands and p5.FFT, we can visualize the amount of energy/volume within these bands by having the shapes pulse in size accordingly with the sound.  
+
+In a similar way, this section of example from Codeacademy uses p5.Amplitude to track overall amplitude of a sound file as it plays and uses a circle to represent it by changes in size. 
+
+![Codeacademy code snippet](assets/Codecademy_Level via circle.png)
