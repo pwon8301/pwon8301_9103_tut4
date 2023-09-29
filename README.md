@@ -24,7 +24,7 @@ The inspiration is to use the p5.sound library to track the amplitudes of a soun
 
 Using shapes to represent the bands and p5.FFT, we can visualize the amount of energy/volume within these bands by having the shapes pulse in size accordingly with the sound.  
 
-Similarly, this snippet example from Codeacademy uses p5.Amplitude to track overall amplitude of a sound file as it plays and uses a circle to represent it by changes in size. 
+Similarly, this snippet example from Codecademy uses p5.Amplitude to track overall amplitude of a sound file as it plays and uses a circle to represent it by changes in size. 
 
 ![Codeacademy code snippet](assets/Codecademy_Level_via_circle.png)
 
