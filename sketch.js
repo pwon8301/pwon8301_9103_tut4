@@ -29,7 +29,6 @@ let velocity;
 let acceleration;
 let eyeWidth = 40
 let eyeHeight = 40
-let prCentroid = 50
 
 function preload() {
   track = loadSound('audio/sample-visualisation.mp3');
@@ -94,8 +93,8 @@ function draw() {
   let mean_freq_index = spectralCentroid / (nyquist / spectrum.length);
 
   // Use a log scale to map centroid within canvas height
-  //Don't cover the full canvas height (minus 5 eye sizes top and bottom)
-  centroidplot = map(log(mean_freq_index), 0, log(spectrum.length), CanvasSize-(5*(eyeHeight*Size)), 5*(eyeHeight*Size));
+  //Don't cover the full canvas height (minus 4 eye sizes top and bottom)
+  centroidplot = map(log(mean_freq_index), 0, log(spectrum.length), CanvasSize-(4*(eyeHeight*Size)), 4*(eyeHeight*Size));
 
   velocity.set(0,0); 
 
