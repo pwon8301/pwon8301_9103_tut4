@@ -29,6 +29,7 @@ let velocity;
 let acceleration;
 let eyeWidth = 40
 let eyeHeight = 40
+let prCentroid = 50
 
 function preload() {
   track = loadSound('audio/sample-visualisation.mp3');
@@ -82,11 +83,27 @@ function draw() {
   console.log("xTime: " + xTime)
   console.log("canvas size: " + CanvasSize)
 
-  //y-position of creeperface
-  yPos = height / 2;
+  // Extract the spectral centroid
 
-  velocity.set(0, random(-1, 1));
-  position.set(xTime, yPos)  //traverse creeper across width according to track length  
+  let nyquist = 22050;
+
+  // get the centroid
+  spectralCentroid = fft.getCentroid();
+
+  // The mean_freq_index calculation is for the display.
+  let mean_freq_index = spectralCentroid / (nyquist / spectrum.length);
+
+  // Use a log scale to map centroid within canvas height
+  //Don't cover the full canvas height (minus 5 eye sizes top and bottom)
+  centroidplot = map(log(mean_freq_index), 0, log(spectrum.length), CanvasSize-(5*(eyeHeight*Size)), 5*(eyeHeight*Size));
+
+  velocity.set(0,0); 
+
+  //traverse creeper across width according to track length  
+  //move creeper height position by centroid
+  position.set(xTime, centroidplot)
+  
+  //smooth out vertical transitions
   acceleration.set(random(-0.01, 0.01), random(-0.01, 0.01));
   velocity.add(acceleration);
   position.add(velocity);
@@ -107,11 +124,11 @@ function GenerateMap(NumOfHorizontalRoad, NumOfVerticalRoad, Size) {
   let IntervalWidth = 600 / NumOfVerticalRoad * Size;
   if (IsmapGenerate == 0) {
     for (let i = 0; i < NumOfHorizontalRoad; i++) {
-      ArrRoadY[i] = Math.floor(IntervalHeight * i + random(10 * Size, IntervalHeight));
+      ArrRoadY[i] = Math.floor(IntervalHeight * i + random(10 * Size, IntervalHeight-10*Size));
       ArrRoadMarkTypeY[i] = Math.trunc(random(1, 3))
     }
     for (let i = 0; i < NumOfVerticalRoad; i++) {
-      ArrRoadX[i] = Math.floor(IntervalWidth * i + random(10 * Size, IntervalWidth));
+      ArrRoadX[i] = Math.floor(IntervalWidth * i + random(10 * Size, IntervalWidth-10*Size));
       ArrRoadMarkTypeX[i] = Math.trunc(random(1, 3))
     }
     IsmapGenerate = 1
