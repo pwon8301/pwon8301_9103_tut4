@@ -1,5 +1,10 @@
 # pwon8301_9103_tut4
+# Main Project 
+Creeper face reacts to volume energy levels with varying colour (blues-reds), and dilation of pupils. 
 
+It will traverse the whole canvas width according to the sound file length, and move up/down according to the spectral centroid. 
+
+Each refresh will provide a new random environment configuration for the creeper face to traverse if desired.  
 
 # Wk 8 Quiz
 ## Part 1: Imaging Technique
