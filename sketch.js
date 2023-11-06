@@ -12,6 +12,12 @@ function setup() {
   redColour = color(255, 0, 0)
   fft = new p5.FFT(0.8, 16); //16 bands
   track.connect(fft);
+
+  let xPos = 180  
+  let yPos = 150
+  position = createVector(xPos, yPos);
+  velocity = createVector();
+  acceleration = createVector();
 }
 
 function draw() {
@@ -31,14 +37,20 @@ function draw() {
   let varAmp = map(trackAmp, 0, 255, 0, 1)
   let c = lerpColor(blueColour,redColour,varAmp)
 
-  let xPos = 180  //excessive xPos currently goes off canvas
-  let yPos = 90
+  let varPupil = map(trackAmp, 0, 255, 0.2, 0.85)
+
   let size = 5 //excessive size constrains to canvas
-  fill(c)
-  drawCreeper(xPos, yPos, size);
+
+  acceleration.set(random(-0.1,0.1), random(-0.1, 0.1));
+  velocity.add(acceleration);  
+  velocity.set(random(-1,1),random(-1,1));  
+  position.add(velocity); 
+
+  fill(c);
+  drawCreeper(position.x, position.y, varPupil, size);
 }
 
-function drawCreeper(xPos, yPos, size){
+function drawCreeper(xPos, yPos, varPupil, size){
   
   noStroke()
   
@@ -65,8 +77,23 @@ function drawCreeper(xPos, yPos, size){
   //left eye
   rect(xPos, yPos, eyeWidth*size, eyeHeight*size)
 
+  //inner left eye
+  push()
+  fill("black")
+  rectMode(CENTER)
+  rect(xPos+(0.5*(eyeWidth*size)),yPos+(0.5*(eyeHeight*size)),varPupil*(eyeWidth*size),varPupil*(eyeHeight*size))
+  pop()
+
   //right eye
   rect(reye_X, yPos, eyeWidth*size, eyeHeight*size)
+
+  //inner right eye
+  push()
+  fill("white")
+  rectMode(CENTER)
+  rect(reye_X+(0.5*(eyeWidth*size)),yPos+(0.5*(eyeHeight*size)),varPupil*(eyeWidth*size),varPupil*(eyeHeight*size))
+  pop()
+
 
   //LS mouth
   rect(xPos+(0.5*eyeSize),yPos+(1.5*eyeSize),0.5*eyeSize,1.5*eyeSize)
